@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>Dashboard</title>
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="./static/styles.css">
+           
+</head>
+<body>
+    <div style="border-bottom: 6px solid red;">
+        <button type="button" id="movies" class="button"> Movies</button>
+        <button type="button" id="theaters" onclick="loadTheaters()">Theater</button>
+        <a href="/logout">
+            <span><i class='fas fa-sign-out-alt' style='font-size:26px'></i></span> Log out
+          </a>
+    </div>
+    <ul>
+        {% for m in movie %}
+        <div style="border-bottom: 2.5px solid black;">
+            <li >
+                <img src={{m['poster']}} style="width:270px;height:300px;">
+                <p>{{ m['title'] }}</p>
+                <p>{{ m['plot'] }}</p>
+                <i class="fa fa-imdb" style="font-size:28px;color:red"> {{ m.imdb['rating']}}</i>
+                <i class="fa fa-thumbs-o-up" style="font-size:28px;color:red">{{m.imdb['votes']}}</i>
+                <form action="/comments" method="post">
+                    <input type="hidden" value={{ m['_id']}} name="id">
+                    <button type="button" id={{ m['_id']}}  onclick="loadComments(this.id)" >comments({{ m['num_mflix_comments']}})</button>
+                 </form>
+            </li>
+        </div>
+        {% endfor %}
+    </ul>
+</body>
+</html>
